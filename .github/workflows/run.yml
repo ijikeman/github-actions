@@ -1,0 +1,11 @@
+name: run
+on:
+  workflow_run:
+    workflows: [main]
+    types: [completed]
+jobs:
+  myjob:
+    runs-on: ubuntu-20.04
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - run: echo "HELLO RUN"
