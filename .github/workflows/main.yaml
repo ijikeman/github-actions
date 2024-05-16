@@ -1,11 +1,13 @@
 name: main
 on: [push]
 
+env:
+  HELLO_WORLD: HelloWorld
 jobs:
   myjob:
     runs-on: ubuntu-20.04
     steps:
-      - run: echo "Hello Main"
-  call-workflow:
-    needs: [myjob]
-    uses: ./.github/workflows/pages.yaml
+      - uses: actions/checkout@v2
+
+      - name: print json file
+        run: echo "${{env.HELLO_WORLD}}"
