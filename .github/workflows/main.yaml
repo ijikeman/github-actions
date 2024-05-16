@@ -19,3 +19,7 @@ jobs:
       # 設定されているかを確認
       - name: Print environment variable
         run: printenv | grep -E '^DB|^ENC|^RESOURCE' | sort
+
+      # 設定されているかを確認
+      - name: Print environment variable
+      run: echo "${{ env.HELLO_WORLD }}"
