@@ -7,7 +7,15 @@ jobs:
   myjob:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
+      - name: checkout
+        uses: actions/checkout@v2
 
-      - name: print json file
-        run: echo "${{env.HELLO_WORLD}}"
+      - name: Set environment variables
+        run: |
+          for s in $(yq e ".${{ env.TARGET_BRANCH_NAME }}" -o=j environments.yml | jq -r "to_entries|map(\"\(.key)=\(.value|tostring)\")|.[]"); do
+           echo $s >> $GITHUB_ENV
+          done
+
+      # 設定されているかを確認
+      - name: Print environment variable
+        run: printenv | grep -E '^DB|^ENC|^RESOURCE' | sort

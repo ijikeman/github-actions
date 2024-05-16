@@ -1,0 +1,4 @@
+main:
+  HELLO_WORLD: 'helloworld'
+test:
+  HELLO_WORLD: 'Helloworld'
