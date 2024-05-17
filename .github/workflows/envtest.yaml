@@ -1,0 +1,11 @@
+name: env test
+on: [push]
+env:
+  env_1: envtest1
+
+jobs:
+  envtest_job:
+    runs-on:  ubuntu-20.04
+    steps:
+      - name: print
+        run: echo ${{ env.env_1 }}

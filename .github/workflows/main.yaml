@@ -3,6 +3,7 @@ on: [push]
 
 env:
   HELLO_WORLD: HelloWorld
+
 jobs:
   myjob:
     runs-on: ubuntu-20.04
@@ -13,8 +14,8 @@ jobs:
       - name: Set environment variables
         run: |
           for s in $(yq e ".${{ env.TARGET_BRANCH_NAME }}" -o=j environments.yml | jq -r "to_entries|map(\"\(.key)=\(.value|tostring)\")|.[]"); do
-           echo $s >> $GITHUB_ENV
-           echo $s
+            echo $s >> $GITHUB_ENV
+            echo $s
           done
 
       # 設定されているかを確認
