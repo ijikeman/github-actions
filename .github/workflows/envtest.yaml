@@ -1,6 +1,6 @@
-name: env test
 on: [push]
 
+# global env設定
 env:
   env_1: envtest1
 
@@ -11,11 +11,23 @@ jobs:
       - name: print
         run: echo ${{ env.env_1 }}
 
+      # env_1を上書きする
       - name: print2
         run: echo ${{ env.env_1 }}
         env:
             env_1: envtest_override
 
-            
+      # 次のrunでは引き継がれない
       - name: print3
+        run: echo ${{ env.env_1 }}
+
+      # 引き継ぐ為に$GITHUB_ENVに設定
+      - name: set overridde GITHUB_ENV
+        run: echo "env_1=${{ env.env_1 }}" >> $GITHUB_ENV
+        env:
+            env_1: envtest_override
+
+
+      # 次のrunで上書きされている
+      - name: print4
         run: echo ${{ env.env_1 }}
