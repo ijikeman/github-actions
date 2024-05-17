@@ -25,4 +25,4 @@ jobs:
       - name: Print environment variable
         run: |
           echo ${{env.playbook}}
-          echo ${{main.HELLO_WORLD}}
+          echo ${{env.main}}
