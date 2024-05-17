@@ -8,4 +8,4 @@ jobs:
         uses: actions/checkout@v4
 
       - name: test
-        runs: ls -l
+        run: ls -l
