@@ -23,4 +23,4 @@ jobs:
 
       # 設定されているかを確認
       - name: Print environment variable
-        run: echo $main
+        run: echo $playbook
