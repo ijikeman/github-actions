@@ -2,6 +2,9 @@ on: [push]
 
 jobs:
   call_job:
-    steps:
-      - uses: ./.github/workflows/call.yml
-      - uses: ./.github/workflows/call2.yml
+     uses: ./.github/workflows/call.yml
+  call_job2:
+    uses: ./.github/workflows/call2.yml
+
+  call_action1:
+    uses: ./.github/actions/action1.yml
