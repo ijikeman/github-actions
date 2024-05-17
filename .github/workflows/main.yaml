@@ -1,17 +1,7 @@
 on: [push]
 
 jobs:
-  call_action1:
-    runs-on: ubuntu-20.04
-    steps:
-      - name: checkout
-        uses: actions/checkout@v4
-
-      - name: test
-        run: ls -l
-      
-      - name: test2
-        run: 'echo hogehoge > hoge.txt'
-
   call-workflow:
-    uses: ./.github/workflows/call.yml
+    uses: ./.github/workflows/call2.yml
+    with:
+      ENV_FILE: .env.prd

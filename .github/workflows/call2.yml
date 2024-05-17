@@ -1,14 +1,18 @@
 ---
 name: 'calltest2'
-on:
-  workflow_call
 
-env:
-  env_1: envtest
+on:
+  workflow_call:
+    inputs:
+      ENV_FILE:
+        type: string
+        required: true
 
 jobs:
-  envtest_job:
-    runs-on:  ubuntu-20.04
+  test-job:
+    runs-on: ubuntu-20.04
     steps:
-      - name: print2
-        run: printenv
+      - name: test
+        run: |
+          cp ./${{ inputs.ENV_FILE }} ./.env
+          cat ./.env
