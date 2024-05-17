@@ -10,7 +10,10 @@ jobs:
       - name: convert env
         run: |
           cat environments.json | \
-          jq -r 'to_entries | map("\(.key)=\(.value)") | .[]'
+          jq -r 'to_entries | map("\(.key)=\(.value)") | .[]' | \
+          while read line; do \
+          echo "$line" >> $GITHUB_ENV \
+          done
 
-          - name: print env
+      - name: print env
         run: printenv
