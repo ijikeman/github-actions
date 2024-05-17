@@ -17,5 +17,4 @@ jobs:
       - name: convert env
         run: |
           cat environments.json | \
-          jq -r --arg key "${GITHUB_REF#refs/heads/}" to_entries | map("\(.key)=\(.value)") | .[]'
-
+          jq -r --arg key "${GITHUB_REF#refs/heads/}" '.[$key] | to_entries | map("\(.key)=\(.value)") | .[]'
