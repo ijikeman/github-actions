@@ -22,4 +22,4 @@ jobs:
 
       # 設定されているかを確認
       - name: Print environment variable
-        run: echo "${{ env.HELLO_WORLD }}"
+        run: echo $HELLO_WORLD
