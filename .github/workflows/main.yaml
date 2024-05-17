@@ -5,5 +5,9 @@ jobs:
     uses: ./.github/workflows/call.yml
   call_job2:
     uses: ./.github/workflows/call2.yml
+
   call_action1:
-    uses: actions/custom_action1/
+        runs-on: ubuntu-20.04
+        steps:
+          - name: custom action call
+            uses: ./.github/actions/custom_action1/
