@@ -16,4 +16,5 @@ jobs:
           done
 
       - name: print env
-        run: printenv
+        run: echo ${{env.playbook}}
+
