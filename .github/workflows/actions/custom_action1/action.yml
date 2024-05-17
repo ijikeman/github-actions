@@ -1,0 +1,7 @@
+name: 'Sample Action'
+runs:
+  using: "composite"
+  steps:
+    - name: test
+      shell: bash
+      run: echo test
