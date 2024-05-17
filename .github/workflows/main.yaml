@@ -19,10 +19,7 @@ jobs:
         run: |
           cat environments.json | \
           jq -r --arg key "${GITHUB_REF#refs/heads/}" '.[$key] | \
-          to_entries | map("\(.key)=\(.value)") | .[]' | \
-          while read line; do \
-            echo "$line" >> $GITHUB_ENV; \
-          done
+          to_entries | map("\(.key)=\(.value)") | .[]'
 
       - name: print2
         run: printenv
