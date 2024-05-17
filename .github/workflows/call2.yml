@@ -1,0 +1,14 @@
+---
+name: 'calltest2'
+on:
+  workflow_call
+
+env:
+  env_1: envtest
+
+jobs:
+  envtest_job:
+    runs-on:  ubuntu-20.04
+    steps:
+      - name: print2
+        run: printenv
