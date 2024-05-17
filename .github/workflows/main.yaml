@@ -25,4 +25,4 @@ jobs:
           done
 
       - name: print2
-        run: echo ${{env.env_1}}
+        run: printenv
