@@ -1,3 +1,5 @@
 {
-  "env_1": "envtest_override"
+  "main": {
+    "env_1": "envtest_override"
+  }
 }
