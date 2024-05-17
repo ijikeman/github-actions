@@ -27,7 +27,6 @@ jobs:
         env:
             env_1: envtest_override
 
-
       # 次のrunで上書きされている
       - name: print4
         run: echo ${{ env.env_1 }}
