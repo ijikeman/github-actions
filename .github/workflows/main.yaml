@@ -14,7 +14,15 @@ jobs:
       - name: checkout
         uses: actions/checkout@main
 
+      # jsonを読み込んでenv設定を行う
       - name: convert env
         run: |
           cat environments.json | \
-          jq -r --arg key "${GITHUB_REF#refs/heads/}" '.[$key] | to_entries | map("\(.key)=\(.value)") | .[]'
+          jq -r --arg key "${GITHUB_REF#refs/heads/}" '.[$key] | \
+          to_entries | map("\(.key)=\(.value)") | .[]' | \
+          while read line; do \
+            echo "$line" >> $GITHUB_ENV; \
+          done
+
+      - name: print2
+        run: echo ${{env.env_1}}
