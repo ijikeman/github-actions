@@ -1,9 +1,16 @@
 on: [push]
 
+env:
+  env_1: envtest
+
 jobs:
   envtest_job:
     runs-on:  ubuntu-20.04
     steps:
+
+      - name: print env
+        run: echo ${{env.env_1}}
+
       - name: checkout
         uses: actions/checkout@main
 
@@ -15,6 +22,5 @@ jobs:
             echo "$line" >> $GITHUB_ENV; \
           done
 
-      - name: print env
-        run: echo ${{env.playbook}}
-
+      - name: print2
+        run: echo ${{env.env_1}}
