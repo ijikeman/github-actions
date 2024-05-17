@@ -7,8 +7,4 @@ jobs:
     uses: ./.github/workflows/call2.yml
 
   call_action1:
-        runs-on: ubuntu-20.04
-        steps:
-          - uses: actions/checkout@v4
-          - name: custom action call
-            uses: ./.github/actions/custom_action1/
+    uses: ./.github/actions/custom_action1/
