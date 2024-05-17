@@ -1,7 +1,7 @@
 ---
 name: 'calltest'
 on:
-  workflow_dispatch
+  workflow_call
 
 env:
   env_1: envtest
