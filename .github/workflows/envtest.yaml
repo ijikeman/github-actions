@@ -1,5 +1,6 @@
 name: env test
 on: [push]
+
 env:
   env_1: envtest1
 
@@ -8,4 +9,13 @@ jobs:
     runs-on:  ubuntu-20.04
     steps:
       - name: print
+        run: echo ${{ env.env_1 }}
+
+      - name: print2
+        run: echo ${{ env.env_1 }}
+        env:
+            env_1: envtest_override
+
+            
+      - name: print3
         run: echo ${{ env.env_1 }}
