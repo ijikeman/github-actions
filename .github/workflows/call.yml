@@ -7,5 +7,5 @@ jobs:
   envtest_job:
     runs-on: ubuntu-20.04
     steps:
-      - name: test2
+      - name: test3
         run: ls -al

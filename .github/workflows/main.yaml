@@ -9,6 +9,9 @@ jobs:
 
       - name: test
         run: ls -l
+      
+      - name: test2
+        run: 'echo hogehoge > hoge.txt'
 
       - name: other workflow
         uses: ./.github/workflows/call.yml
