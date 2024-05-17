@@ -11,7 +11,9 @@ jobs:
         run: |
           cat environments.json | \
           jq -r 'to_entries | map("\(.key)=\(.value)") | .[]' | \
-          while read line; do echo "$line" >> $GITHUB_ENV; done
+          while read line; do \
+            echo "$line" >> $GITHUB_ENV; \
+          done
 
       - name: print env
         run: printenv
