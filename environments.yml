@@ -1,5 +1,0 @@
-main:
-  HELLO_WORLD: 'helloworld'
-test:
-  HELLO_WORLD: 'Helloworld'
-playbook: 'a.yml,b.yml'

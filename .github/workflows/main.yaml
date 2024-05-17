@@ -1,29 +1,19 @@
-name: main
 on: [push]
 
-env:
-  HELLO_WORLD: HelloWorld
-
 jobs:
-  myjob:
-    runs-on: ubuntu-20.04
+  envtest_job:
+    runs-on:  ubuntu-20.04
     steps:
-      - name: checkout
-        uses: actions/checkout@v2
-
-      - name: Set environment variables
+      - name: convert env
         run: |
-          for s in $(yq e ".${{ env.TARGET_BRANCH_NAME }}" -o=j environments.yml | jq -r "to_entries|map(\"\(.key)=\(.value|tostring)\")|.[]"); do
-            echo $s >> $GITHUB_ENV
-            echo $s
+          cat environments.json | \
+          jq -r 'to_entries | \
+          map("\(.key)=\(.value)") | \
+          .[]' | \
+          while read line;
+          do
+            echo "$line" >> $GITHUB_ENV
           done
-
-      # 設定されているかを確認
-      - name: Print environment variable
-        run: printenv | grep -E '^DB|^ENC|^RESOURCE' | sort
-
-      # 設定されているかを確認
-      - name: Print environment variable
-        run: |
-          echo ${{env.playbook}}
-          echo ${{env.main}}
+      
+      - name: print env
+        run: printenv
