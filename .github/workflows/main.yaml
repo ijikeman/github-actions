@@ -4,6 +4,9 @@ jobs:
   envtest_job:
     runs-on:  ubuntu-20.04
     steps:
+      - name: checkout
+        uses: actions/checkout@main
+
       - name: convert env
         run: |
           cat environments.json | \
