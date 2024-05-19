@@ -4,8 +4,9 @@ jobs:
   test:
     runs-on: ubuntu-20.04
     steps:
-      - name: dotenv
-        uses: actions/dotenv-action@v1.1.2
+      - name: dotenv load
+        id: dotenv
+        uses: ./.github/actions/dotenv-action
 
       - name: printenv test
         run: printenv
