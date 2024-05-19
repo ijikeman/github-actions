@@ -6,7 +6,7 @@ jobs:
     steps:
       - name: dotenv load
         id: dotenv
-        uses: ./.github/actions/dotenv-action
+        uses: falti/dotenv-action@v1.1.2
 
       - name: printenv test
         run: printenv
