@@ -1,6 +1,12 @@
 on: [push]
 
 jobs:
+  test:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: printenv test
+        run: printenv
+
   call-workflow:
     uses: ./.github/workflows/call2.yml
     with:
