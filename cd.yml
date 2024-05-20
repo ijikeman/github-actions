@@ -1,0 +1,2 @@
+PLAYBOOK: test.yml,playbook1.yml
+INVENTORY: production

@@ -1,0 +1,16 @@
+---
+name: 'Ansible'
+
+on:
+  workflow_call:
+    inputs:
+      CD_FILE:
+        type: string
+        required: true
+  
+jobs:
+  ansible_job:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: 
+        run: cat ./${{ inputs.CD_FILE }}
