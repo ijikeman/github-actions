@@ -4,4 +4,4 @@ jobs:
   call-workflow:
     uses: ./.github/workflows/ansible.yml
     with:
-      ENV_FILE: cd.yml
+      CD_FILE: cd.yml
