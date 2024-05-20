@@ -1,9 +1,0 @@
-{
-  "main": {
-    "env_1": "envtest_override"
-    "playbooks": [
-      "a.yml",
-      "b.yml"
-    ]
-  }
-}
