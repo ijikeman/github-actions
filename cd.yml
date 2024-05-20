@@ -1,1 +1,1 @@
-PLAYBOOK: test.yml,playbook1.yml
+ANSIBLE_PLAYBOOK: test.yml,playbook1.yml

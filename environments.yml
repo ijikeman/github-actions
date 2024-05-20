@@ -1,6 +1,6 @@
 main:
   ANSIBLE_OPTION: '--diff'
-  INVENTORY: production
+  ANSIBLE_INVENTORY: production
 feature:
   ANSIBLE_OPTION: '--diff --check'
-  INVENTORY: production
+  ANSIBLE_INVENTORY: production

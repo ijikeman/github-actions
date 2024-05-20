@@ -15,8 +15,11 @@ jobs:
       - name: checkout
         uses: actions/checkout@v4
 
-      - name: 
-        run: cat ./${{ inputs.CD_FILE }}
+      - name: set Ansible Variables
+        run: |
+          for s in $(yq e . -o=j cd.yml | jq -r "to_entries|map(\"\(.key)=\(.value|tostring)\")|.[]"); do
+            echo $s >> $GITHUB_ENV
+          done
 
       # yamlを読み込んでenv設定を行う
       - name: convert env
