@@ -10,4 +10,4 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/matrix-test/
         with:
-          matrix-id: ${{ matrix.id }}
+          ID: ${{ matrix.id }}
