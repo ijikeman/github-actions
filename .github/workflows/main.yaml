@@ -4,13 +4,24 @@ on:
   push
 
 jobs:
-  constants:
-    name: Constants
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set output value
+        id: step1
+        run: |
+          echo "::set-output name=param1::matrix=['{\"name\": \"a\"},{\"name\": \"b\"}']"
+    outputs:
+      param1: ${{ steps.step1.outputs.param1 }}
+
+  example_matrix:
+    needs: job1
     runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        id: ${{ needs.job1.outputs.param1 }}
     steps:
       - uses: actions/checkout@v4
-      - id: set-matrix
-        run: |
-          for json in $(jq -c .params[] matrix.json); do
-            echo "matrix=${json}"
-          done
+      - uses: ./.github/actions/matrix-test/
+        with:
+          MATRIX-ID: ${{ matrix.id }}
