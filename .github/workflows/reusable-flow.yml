@@ -21,9 +21,14 @@ jobs:
         
       - name: printenv2
         run: echo ${{ github.env }}
+  
+      - id: stepid
+        run: echo "::set-output name=value::${{ github.env.param1 }}"
+      outputs:
+        value: ${{ steps.stepid.outputs.value }}
 
   call-another-reusable:
+    needs: setup_params
     uses: ./.github/workflows/nested-flow.yml
     with:
-      param1: '${{ github.env.param1 }}'
-      param2: '${{ github.env.param2 }}'
+      param1: '${{ needs.setup_params.param1 }}'
