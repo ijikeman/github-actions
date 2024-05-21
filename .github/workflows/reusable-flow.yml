@@ -9,7 +9,8 @@ on:
         type: string
 
 jobs:
-  call-another-reusable:
-    uses: ./.github/workflows/reusable-nested-flow.yml
-    with:
-      param1: ${{ inputs.param1 }}
+  test-job:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: test
+        run: echo ${{ inputs.param1 }}
