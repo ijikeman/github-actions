@@ -14,8 +14,13 @@ jobs:
         id: set-matrix
         run: |
           echo '["{\"name\": \"a\"}","{\"name\": \"b\"}"]' | jq -c
-          cat matrix.json  |jq '@json' | sed -e 's/\"\[/[\"/g' -e 's/\]\"$/\"]/g' -e 's/\},{/\}\",\"{/g'| jq -c
-          list=$(cat matrix.json  |jq '@json' | sed -e 's/\"\[/[\"/g' -e 's/\]\"$/\"]/g' -e 's/\},{/\}\",\"{/g'| jq -c)
+          list='['
+          for s in $(jq .[] matrix.json| jq -c|jq @json); do
+            list=${list}"${s}",
+          done
+          # 変数listの最後の文字','を']'に置換
+          list=$(echo $list | sed -e 's/\,$/\]/g')
+          echo $list
           echo "value=${list}" >> $GITHUB_OUTPUT
 
   example_matrix:
