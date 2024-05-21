@@ -18,8 +18,12 @@ jobs:
           echo 'param2=MOGE' >> $GITHUB_ENV
       - name: printenv
         run: printenv
+        
+      - name: printenv2
+        run: echo ${{ github.env }}
+
   call-another-reusable:
     uses: ./.github/workflows/nested-flow.yml
     with:
-      param1: '${{ env.param1 }}'
-      param2: '${{ env.param2 }}'
+      param1: '${{ github.env.param1 }}'
+      param2: '${{ github.env.param2 }}'
