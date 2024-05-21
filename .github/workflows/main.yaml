@@ -16,7 +16,7 @@ jobs:
         id: set-matrix
         run: |
           # 変数STRにlist=という文字列を代入
-          STR=$(cat matrix.json)
+          STR=$(cat matrix.json | tr -d ' ' | tr -d '\n')
           echo $STR
           echo "value=${STR}" >> $GITHUB_OUTPUT
 
