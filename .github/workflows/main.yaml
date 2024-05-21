@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Create Value
         run: |
-          test=`echo "[{\"name\": \"a\"},{\"name\": \"b\"}]"|jq '@json'`
+          test=`echo "[{\"name\": \"a\"},{\"name\": \"b\"}]"`
           echo matrix=$test >> $GITHUB_ENV
       - name: printenv
         run: printenv
