@@ -14,12 +14,16 @@ jobs:
     steps:
       - name: Set output value
         id: step1
-        run: echo "::set-output name=my_output::Hello, from Job 1"
+        run: |
+          echo "::set-output name=param1::HOGE"
+          echo "::set-output name=param2::MOGE"
     outputs:
-      job1_output: ${{ steps.step1.outputs.my_output }}
+      param1: ${{ steps.step1.outputs.param1 }}
+      param2: ${{ steps.step1.outputs.param2 }}
 
   call-another-reusable:
     needs: job1
     uses: ./.github/workflows/nested-flow.yml
     with:
-      param1:  ${{ needs.job1.outputs.job1_output }}
+      param1:  ${{ needs.job1.outputs.param1 }}
+      param2:  ${{ needs.job1.outputs.param2 }}
