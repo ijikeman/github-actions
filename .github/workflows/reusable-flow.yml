@@ -9,26 +9,17 @@ on:
         type: string
 
 jobs:
-  setup_params:
-    runs-on: ubuntu-20.04
+  job1:
+    runs-on: ubuntu-latest
     steps:
-      - name: setup
-        run: |
-          echo 'param1=HOGE' >> $GITHUB_ENV
-          echo 'param2=MOGE' >> $GITHUB_ENV
-      - name: printenv
-        run: printenv
-        
-      - name: printenv2
-        run: echo ${{ github.env }}
-  
-      - id: stepid
-        run: echo "::set-output name=value::${{ github.env.param1 }}"
-      outputs:
-        value: ${{ steps.stepid.outputs.value }}
+      - name: Set output value
+        id: step1
+        run: echo "::set-output name=my_output::Hello, from Job 1"
+    outputs:
+      job1_output: ${{ steps.step1.outputs.my_output }}
 
   call-another-reusable:
-    needs: setup_params
+    needs: job1
     uses: ./.github/workflows/nested-flow.yml
     with:
-      param1: '${{ needs.setup_params.param1 }}'
+      param1:  ${{ needs.job1.outputs.job1_output }}
