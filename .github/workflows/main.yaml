@@ -19,7 +19,7 @@ jobs:
     needs: job1
     strategy:
       matrix:
-        id: [ "${{ needs.job1.outputs.param1 }}" ]
+        id: "${{ needs.job1.outputs.param1 }}"
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/matrix-test/
