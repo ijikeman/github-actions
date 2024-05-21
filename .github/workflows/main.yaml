@@ -52,6 +52,7 @@ jobs:
         id: ${{fromJson(needs.set-matrix.outputs.something)}}
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/matrix-matrix/
+
+      - uses: ./.github/actions/matrix-test/
         with:
           MATRIX-ID: ${{ matrix.id }}
