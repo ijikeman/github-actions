@@ -21,9 +21,9 @@ jobs:
           # test.jsonをjqコマンドでパースして、1行ずつ処理
           for s in $(jq -c .[] matrix.json); do
             # 変数sをjsonエスケープする
-            s=$(echo $s | jq -sRr @json)
+            #s=$(echo $s | jq -sRr @json)
             # '\n\を削除
-            s=$(echo $s | sed -e 's/\\n//g')
+            #s=$(echo $s | sed -e 's/\\n//g')
             # STRにsを追加
             STR="${STR}${s}"
             # for文の最後以外は変数STRに','を追加する
