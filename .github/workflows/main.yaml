@@ -9,40 +9,11 @@ jobs:
     outputs:
       something: ${{ steps.set-matrix.outputs.value }}
     steps:
-      - name: checkout
-        uses: actions/checkout@v4
-
       - name: make values
         id: set-matrix
         run: |
-          # 変数STRにlist=という文字列を代入
-          STR=$(cat matrix.json | tr -d ' ' | tr -d '\n')
-          echo $STR
-          echo "value=${STR}" >> $GITHUB_OUTPUT
-
-      # - name: make values
-      #   id: set-matrix
-      #   run: |
-      #     # 変数STRにlist=という文字列を代入
-      #     STR='['
-          
-      #     # test.jsonをjqコマンドでパースして、1行ずつ処理
-      #     for s in $(jq -c .[] matrix.json); do
-      #       # 変数sをjsonエスケープする
-      #       #s=$(echo $s | jq -sRr @json)
-      #       # '\n\を削除
-      #       #s=$(echo $s | sed -e 's/\\n//g')
-      #       # STRにsを追加
-      #       STR="${STR}${s}"
-      #       # for文の最後以外は変数STRに','を追加する
-      #       STR="${STR},"
-      #     done
-      #     # 最後の,を削除
-      #     STR=$(echo $STR | sed -e 's/,$//g')
-      #     #STRに']'を追加
-      #     STR="${STR}]"
-      #     echo $STR
-      #     echo "value=${STR}" >> $GITHUB_OUTPUT
+          list=$(cat matrix.json | tr -d ' ' | tr -d '\n'| jq -c)
+          echo "value=${list}" >> $GITHUB_OUTPUT
 
   example_matrix:
     runs-on: ubuntu-20.04
@@ -52,7 +23,6 @@ jobs:
         id: ${{fromJson(needs.set-matrix.outputs.something)}}
     steps:
       - uses: actions/checkout@v4
-
       - uses: ./.github/actions/matrix-test/
         with:
           MATRIX-ID: ${{ matrix.id }}
