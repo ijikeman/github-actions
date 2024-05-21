@@ -4,7 +4,12 @@ on:
   push
 
 jobs:
-  UseReusableFlow:
-    uses: ./.github/workflows/reusable-flow.yml
-    with:
-      param1: hoge
+  constants:
+    name: Constants
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - id: set-matrix
+        run: |
+          json=$(cat ${{ github.workspace }}/matrix.yml| ruby -ryaml -rjson -e 'puts YAML.load(STDIN).to_json')
+          echo "matrix=${json}"
