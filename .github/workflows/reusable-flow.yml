@@ -21,5 +21,5 @@ jobs:
   call-another-reusable:
     uses: ./.github/workflows/nested-flow.yml
     with:
-      param1: ${{ github.env.param1 }}
-      param2: ${{ github.env.param2 }}
+      param1: env.param1
+      param2: env.param2
