@@ -9,11 +9,12 @@ jobs:
     steps:
       - name: Create Value
         run: |
-          test=`echo "[{\"name\": \"a\"},{\"name\": \"b\"}]"`
-          echo matrix=$test >> $GITHUB_ENV
+          echo '["hoge","fuga"]' | jq -c
+          list=$(echo '["hoge","fuga"]' | jq -c)
+          echo "matrix=${list}" >> $GITHUB_OUTPUT
+
       - name: printenv
         run: printenv
-
 
       - name: Set output value
         id: step1
