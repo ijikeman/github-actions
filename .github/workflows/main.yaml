@@ -1,25 +1,12 @@
 on: [push]
 
 jobs:
-  call-workflow:
-    uses: ./.github/workflows/ansible.yml
-
-  setup:
-    runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.matrix.outputs.value }}
-    steps:
-      - id: matrix
-        run: |
-          echo "value=[\"a\", \"b\", \"c\"]" >> $GITHUB_OUTPUT
-      - run: |
-          echo "${{ steps.matrix.outputs.value }}"
-  build:
-    needs: [ setup ]
-    runs-on: ubuntu-latest
+  example_matrix:
+    runs-on: ubuntu-20.04
     strategy:
       matrix:
-        value: ${{fromJSON(needs.setup.outputs.matrix)}}
+        id: [10, 12, 14]
     steps:
-      - run: |
-          echo "${{ matrix.value }}"
+      - uses: ./.github/actions/matrix-test.yml
+        with:
+          matrix-id: ${{ matrix.id }}
