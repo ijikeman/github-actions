@@ -16,25 +16,32 @@ jobs:
         id: set-matrix
         run: |
           # 変数STRにlist=という文字列を代入
-          STR='['
-          
-          # test.jsonをjqコマンドでパースして、1行ずつ処理
-          for s in $(jq -c .[] matrix.json); do
-            # 変数sをjsonエスケープする
-            #s=$(echo $s | jq -sRr @json)
-            # '\n\を削除
-            #s=$(echo $s | sed -e 's/\\n//g')
-            # STRにsを追加
-            STR="${STR}${s}"
-            # for文の最後以外は変数STRに','を追加する
-            STR="${STR},"
-          done
-          # 最後の,を削除
-          STR=$(echo $STR | sed -e 's/,$//g')
-          #STRに']'を追加
-          STR="${STR}]"
-          echo $STR
+          STR=`cat matrix.json`
           echo "value=${STR}" >> $GITHUB_OUTPUT
+
+      # - name: make values
+      #   id: set-matrix
+      #   run: |
+      #     # 変数STRにlist=という文字列を代入
+      #     STR='['
+          
+      #     # test.jsonをjqコマンドでパースして、1行ずつ処理
+      #     for s in $(jq -c .[] matrix.json); do
+      #       # 変数sをjsonエスケープする
+      #       #s=$(echo $s | jq -sRr @json)
+      #       # '\n\を削除
+      #       #s=$(echo $s | sed -e 's/\\n//g')
+      #       # STRにsを追加
+      #       STR="${STR}${s}"
+      #       # for文の最後以外は変数STRに','を追加する
+      #       STR="${STR},"
+      #     done
+      #     # 最後の,を削除
+      #     STR=$(echo $STR | sed -e 's/,$//g')
+      #     #STRに']'を追加
+      #     STR="${STR}]"
+      #     echo $STR
+      #     echo "value=${STR}" >> $GITHUB_OUTPUT
 
   example_matrix:
     runs-on: ubuntu-20.04
