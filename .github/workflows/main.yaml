@@ -5,6 +5,6 @@ on:
 
 jobs:
   UseReusableFlow:
-    uses: .github/workflows/reusable-flow.yml
+    uses: ./.github/workflows/reusable-flow.yml
     with:
       param1: hoge

@@ -10,6 +10,6 @@ on:
 
 jobs:
   call-another-reusable:
-    uses: .github/workflows/reusable-nested-flow.yml
+    uses: ./.github/workflows/reusable-nested-flow.yml
     with:
       param1: ${{ inputs.param1 }}
