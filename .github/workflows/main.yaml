@@ -35,3 +35,6 @@ jobs:
           #STRに']'を追加
           STR="${STR}]"
           echo $STR
+          echo "value=${STR}" >> $GITHUB_OUTPUT
+      - name: test
+        run: printenv
