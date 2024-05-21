@@ -11,6 +11,6 @@ jobs:
       - uses: actions/checkout@v4
       - id: set-matrix
         run: |
-          for s in $(jq -c .params[] matrix.json); do
+          for json in $(jq -c .params[] matrix.json); do
             echo "matrix=${json}"
           done
