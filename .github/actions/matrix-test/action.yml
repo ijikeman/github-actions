@@ -1,7 +1,7 @@
 name: 'Hello World'
 description: 'Greet someone and record the time'
 inputs:
-  HOGE:  # id of input
+  MATRIX-ID:  # id of input
     description: 'Who to greet'
     required: true
     default: 'World'
@@ -10,4 +10,4 @@ runs:
   steps:
     - name: test
       shell: bash
-      run: echo ${{ inputs.HOGE }}
+      run: echo ${{ inputs.MATRIX-ID }}
