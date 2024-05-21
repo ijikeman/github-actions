@@ -16,7 +16,7 @@ jobs:
         id: set-matrix
         run: |
           # 変数STRにlist=という文字列を代入
-          STR='list=['
+          STR='['
           
           # test.jsonをjqコマンドでパースして、1行ずつ処理
           for s in $(jq -c .[] matrix.json); do
