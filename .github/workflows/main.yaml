@@ -4,31 +4,24 @@ on:
   push
 
 jobs:
-  job1:
+  set-matrix:
     runs-on: ubuntu-latest
+    outputs:
+      something: ${{ steps.set-matrix.outputs.value }}
     steps:
-      - name: Create Value
+      - name: make values
+        id: set-matrix
         run: |
           echo '["hoge","fuga"]' | jq -c
           list=$(echo '["hoge","fuga"]' | jq -c)
-          echo "matrix=${list}" >> $GITHUB_OUTPUT
-
-      - name: printenv
-        run: printenv
-
-      - name: Set output value
-        id: step1
-        run: |
-          echo "::set-output name=param1::${{ env.matrix }}"
-    outputs:
-      param1: ${{ steps.step1.outputs.param1 }}
+          echo "value=${list}" >> $GITHUB_OUTPUT
 
   example_matrix:
     runs-on: ubuntu-20.04
-    needs: job1
+    needs: set-matrix
     strategy:
       matrix:
-        id: ${{fromJson(needs.job1.outputs.param1)}}
+        id: ${{fromJson(needs.set-matrix.outputs.something)}}
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/matrix-test/
