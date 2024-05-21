@@ -40,15 +40,14 @@ jobs:
           echo $STR
           echo "value=${STR}" >> $GITHUB_OUTPUT
 
-      example_matrix:
-        runs-on: ubuntu-20.04
-        needs: set-matrix
-        strategy:
-          matrix:
-            id: ${{fromJson(needs.set-matrix.outputs.something)}}
-        steps:
-          - uses: actions/checkout@v4
-          - uses: ./.github/actions/matrix-test/  `                                                                                                                                                                                                                                 
-            with:
-              MATRIX-ID: ${{ matrix.id }}
-    
+  example_matrix:
+    runs-on: ubuntu-20.04
+    needs: set-matrix
+    strategy:
+      matrix:
+        id: ${{fromJson(needs.set-matrix.outputs.something)}}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/matrix-test/  `                                                                                                                                                                                                                                 
+        with:
+          MATRIX-ID: ${{ matrix.id }}
