@@ -16,6 +16,8 @@ jobs:
         run: |
           echo 'param1=HOGE' >> $GITHUB_ENV
           echo 'param2=MOGE' >> $GITHUB_ENV
+      - name: printenv
+        run: printenv
   call-another-reusable:
     uses: ./.github/workflows/nested-flow.yml
     with:
