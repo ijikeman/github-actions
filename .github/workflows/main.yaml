@@ -12,8 +12,8 @@ jobs:
       - name: make values
         id: set-matrix
         run: |
-          echo '["hoge","fuga"]' | jq -c
-          list=$(echo '["hoge","fuga"]' | jq -c)
+          echo '["{\"name\": \"a\"}","{\"name\": \"b\"}"]' | jq -c
+          list=$(echo '["{\"name\": \"a\"}","{\"name\": \"b\"}"]' | jq -c)
           echo "value=${list}" >> $GITHUB_OUTPUT
 
   example_matrix:
