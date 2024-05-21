@@ -7,6 +7,6 @@ jobs:
       matrix:
         id: [10, 12, 14]
     steps:
-      - uses: ./.github/actions/matrix-test.yml
+      - uses: ./.github/actions/matrix-test/
         with:
           matrix-id: ${{ matrix.id }}
