@@ -10,7 +10,7 @@ jobs:
       - name: Set output value
         id: step1
         run: |
-          echo "::set-output name=param1::['a=A,b=B,c=C','a=a,b=b,c=c']"
+          echo "::set-output name=param1::['{\"name\": \"A\"}', '{\"name\": \"B\"}']"
     outputs:
       param1: ${{ steps.step1.outputs.param1 }}
 
