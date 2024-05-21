@@ -4,28 +4,38 @@ on:
   push
 
 jobs:
-  set-matrix:
-    runs-on: ubuntu-latest
-    outputs:
-      something: ${{ steps.set-matrix.outputs.value }}
-    steps:
-      - uses: actions/checkout@v4
-      - name: make values
-        id: set-matrix
-        run: |
-          echo '["{\"name\": \"a\"}","{\"name\": \"b\"}"]' | jq -c
-          cat matrix.json  |jq '@json'| jq -c
-          list=$(cat matrix.json  |jq '@json'| jq -c)
-          echo "value=${list}" >> $GITHUB_OUTPUT
-
   example_matrix:
     runs-on: ubuntu-20.04
-    needs: set-matrix
     strategy:
       matrix:
-        id: ${{fromJson(needs.set-matrix.outputs.something)}}
+        id: ${{ fromJson(./matrix.json)}}
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/matrix-test/
         with:
           MATRIX-ID: ${{ matrix.id }}
+
+  # set-matrix:
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     something: ${{ steps.set-matrix.outputs.value }}
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - name: make values
+  #       id: set-matrix
+  #       run: |
+  #         echo '["{\"name\": \"a\"}","{\"name\": \"b\"}"]' | jq -c
+  #         cat matrix.json  |jq '@json'| jq -c
+  #         list=[$(cat matrix.json  |jq '@json'| jq -c)]
+  #         echo "value=${list}" >> $GITHUB_OUTPUT
+  # example_matrix:
+  #   runs-on: ubuntu-20.04
+  #   needs: set-matrix
+  #   strategy:
+  #     matrix:
+  #       id: ${{fromJson(needs.set-matrix.outputs.something)}}
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: ./.github/actions/matrix-test/
+  #       with:
+  #         MATRIX-ID: ${{ matrix.id }}
