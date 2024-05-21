@@ -27,7 +27,7 @@ jobs:
             # STRにsを追加
             STR="${STR}${s}"
             # for文の最後以外は変数STRに','を追加する
-            if [ $s != $(jq -c .[] test.json | tail -n 1) ]; then
+            if [ $s != $(jq -c .[] matrix.json | tail -n 1) ]; then
               STR="${STR},"
             else
               echo $s
@@ -40,14 +40,14 @@ jobs:
           echo $STR
           echo "value=${STR}" >> $GITHUB_OUTPUT
 
-  example_matrix:
-    runs-on: ubuntu-20.04
-    needs: set-matrix
-    strategy:
-      matrix:
-        id: ${{fromJson(needs.set-matrix.outputs.something)}}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/matrix-test/  `                                                                                                                                                                                                                                 
-        with:
-          MATRIX-ID: ${{ matrix.id }}
+  # example_matrix:
+  #   runs-on: ubuntu-20.04
+  #   needs: set-matrix
+  #   strategy:
+  #     matrix:
+  #       id: ${{fromJson(needs.set-matrix.outputs.something)}}
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: ./.github/actions/matrix-matrix/  `                                                                                                                                                                                                                                 
+  #       with:
+  #         MATRIX-ID: ${{ matrix.id }}
