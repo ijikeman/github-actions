@@ -1,7 +1,13 @@
-name: 'Matrix Sample Action'
+name: 'Hello World'
+description: 'Greet someone and record the time'
+inputs:
+  HOGE:  # id of input
+    description: 'Who to greet'
+    required: true
+    default: 'World'
 runs:
   using: "composite"
   steps:
     - name: test
       shell: bash
-      run: echo ${{ input.ID }}
+      run: echo ${{ input.HOGE }}
