@@ -7,10 +7,15 @@ on:
         description: 'Param1'
         required: true
         type: string
+      param2:
+        description: 'Param2'
+        required: false
+        type: string
+        default: 'default-param2'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Echo
-        run: echo "called from reusable flow with param ${{ inputs.param1 }}!"
+        run: echo "called from reusable flow with param ${{ inputs.param1 }} & ${{ inputs.param2 }}!"

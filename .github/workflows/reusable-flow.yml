@@ -9,7 +9,15 @@ on:
         type: string
 
 jobs:
+  setup_params:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: setup
+        run: |
+          echo 'param1=HOGE' >> $GITHUB_ENV
+          echo 'param2=MOGE' >> $GITHUB_ENV
   call-another-reusable:
     uses: ./.github/workflows/nested-flow.yml
     with:
-      param1: ${{ inputs.param1 }}
+      param1: ${{ github.env.param1 }}
+      param2: ${{ github.env.param2 }}
