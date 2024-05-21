@@ -13,3 +13,23 @@ jobs:
           echo matrix=$test >> $GITHUB_ENV
       - name: printenv
         run: printenv
+
+
+      - name: Set output value
+        id: step1
+        run: |
+          echo "::set-output name=param1::${{ env.matrix }}"
+    outputs:
+      param1: ${{ steps.step1.outputs.param1 }}
+
+  example_matrix:
+    runs-on: ubuntu-20.04
+    needs: job1
+    strategy:
+      matrix:
+        id: ${{fromJson(needs.job1.outputs.param1)}}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/matrix-test/
+        with:
+          MATRIX-ID: ${{ matrix.id }}
