@@ -4,4 +4,4 @@ runs:
   steps:
     - name: test
       shell: bash
-      run: echo $INPUT_matrix-id
+      run: echo ${{ input.matrix-id }}
