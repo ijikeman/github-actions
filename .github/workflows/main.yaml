@@ -10,7 +10,7 @@ jobs:
       - name: Set output value
         id: step1
         run: |
-          echo "::set-output name=param1::1,2,3"
+          echo "::set-output name=param1::[1,2,3]"
     outputs:
       param1: ${{ steps.step1.outputs.param1 }}
 
@@ -19,7 +19,7 @@ jobs:
     needs: job1
     strategy:
       matrix:
-        id: "${{ needs.job1.outputs.param1 }}"
+        id: ${{fromJson(needs.job1.outputs.param1)}}
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/matrix-test/
