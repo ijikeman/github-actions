@@ -1,13 +1,10 @@
-on: [push]
+name: Use reusable flow
+
+on:
+  workflow_dispatch:
 
 jobs:
-  example_matrix:
-    runs-on: ubuntu-20.04
-    strategy:
-      matrix:
-        id: [10, 12, 14]
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/matrix-test/
-        with:
-          MATRIX-ID: ${{ matrix.id }}
+  UseReusableFlow:
+    uses: .github/workflows/reusable-flow.yml
+    with:
+      param1: hoge
