@@ -39,8 +39,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install ansible==${{ env.ANSIBLE_VERSION }}  # 必要なAnsibleのバージョンを指定
           ansible --version
-          ansible-lint --version
-          pip install ansible-lint==
 
   example_matrix:
     runs-on: ubuntu-20.04
