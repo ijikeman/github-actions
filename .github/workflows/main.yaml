@@ -3,6 +3,9 @@ name: Use reusable flow
 on:
   push
 
+env:
+  ANSIBLE_VERSION: '2.10.7'
+
 jobs:
   set-matrix:
     runs-on: ubuntu-latest
@@ -29,6 +32,16 @@ jobs:
           echo $list
           # set output
           echo "value=${list}" >> $GITHUB_OUTPUT
+
+      - name: Install Ansible
+        run: |
+          ansible --version
+          python -m pip install --upgrade pip
+          pip install ansible==
+          pip install ansible==${{ env.ANSIBLE_VERSION }}  # 必要なAnsibleのバージョンを指定
+          ansible --version
+          ansible-lint --version
+          pip install ansible-lint==
 
   example_matrix:
     runs-on: ubuntu-20.04
