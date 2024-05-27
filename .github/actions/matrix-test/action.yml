@@ -13,5 +13,6 @@ runs:
       run: echo '${{ inputs.MATRIX-ID }}'| jq .name
 
     - name: Install Ansible
+      shell: bash
       run: |
         ansible --version
