@@ -5,12 +5,24 @@ inputs:
     description: 'Who to greet'
     required: true
     default: 'World'
+  ANSIBLE_VERSION:
+    description: 'Who to greet'
+    required: false
+    default: '2.10.7'
+
 runs:
   using: "composite"
   steps:
     - name: test
       shell: bash
       run: echo '${{ inputs.MATRIX-ID }}'| jq .name
+
+    - name: Install Ansible
+      shell: bash
+      run: |
+        ansible --version
+        python -m pip install --upgrade pip
+        pip install ansible==${{ inputs.ANSIBLE_VERSION }}  # 必要なAnsibleのバージョンを指定
 
     - name: Install Ansible
       shell: bash
