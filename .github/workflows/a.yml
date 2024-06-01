@@ -1,10 +1,13 @@
-name: test-b
-on:
-  workflow_call:
+---
+  name: 'calltest'
+  
+  on:
+    workflow_call:
 
-jobs:
-  b01:
-    runs_on: ubuntu-latest
-    steps:
-      - name: moge
-        run: echo moge
+  jobs:
+    test-job:
+      runs-on: ubuntu-20.04
+      steps:
+        - name: test
+          run: |
+            echo test-a
