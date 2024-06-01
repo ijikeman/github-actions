@@ -1,0 +1,11 @@
+name: test-a
+on:
+  workflow_call:
+
+jobs:
+  a01:
+    runs_on: ubuntu-latest
+    steps:
+      - name: hoge
+        run: echo hoge
+

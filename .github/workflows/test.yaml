@@ -1,0 +1,10 @@
+name: test
+
+on: [push]
+
+jobs:
+  call_job1:
+    uses: ./.github/workflows/a.yml
+  call_job2:
+    uses: ./.github/workflows/b.yml
+    needs: call_job1

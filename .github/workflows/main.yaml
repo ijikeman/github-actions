@@ -1,7 +1,7 @@
 name: Use reusable flow
 
 on:
-  push
+  workflow_call:
 
 env:
   ANSIBLE_VERSION: '2.10.7'
