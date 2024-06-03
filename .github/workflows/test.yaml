@@ -38,7 +38,7 @@ jobs:
           # initial var
           list='['
           # jsonの配列単位でイテレーション
-          for s in $($result|jq -r|jq .[]| jq -c|jq @json); do
+          for s in $(echo $result|jq -r|jq .[]| jq -c|jq @json); do
             # "", で囲って配列として連結
             list=${list}"${s}",
           done
