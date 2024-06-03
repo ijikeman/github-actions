@@ -35,7 +35,7 @@ jobs:
           echo $list
           # set output
           echo "value=${list}" >> $GITHUB_OUTPUT
-          echo "ready=${$ready}" >> $GITHUB_OUTPUT
+          echo "ready=${ready}" >> $GITHUB_OUTPUT
 
   test:
     runs-on: ubuntu-latest
