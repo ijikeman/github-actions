@@ -5,6 +5,8 @@ on: [push]
 jobs:
   run-playbooks:
     runs-on: ubuntu-latest
+    outputs:
+      something: ${{ steps.set-matrix.outputs.value }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -43,10 +45,26 @@ jobs:
             list=${list}"${s}",
           done
           # 変数listの最後の文字','を']'に置換
-          list=$(echo $list | sed -e 's/\,$/\]/g')
+          list=$(echo $list | sed -e 's/\,$//g')
+          list=$list]
           # debug
           echo $list
           # set output
           echo "value=${list}"
+          echo "value=${list}" >> $GITHUB_OUTPUT
         env:
           result: ${{ steps.read-playbooks.outputs.result }}
+          # set output
+
+  example_matrix:
+    runs-on: ubuntu-20.04
+    needs: run-playbooks
+    if: needs.run-playbooks.outputs.something != '[]'
+    strategy:
+      matrix:
+        id: ${{fromJson(needs.run-playbooks.outputs.something)}}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/matrix-test/
+        with:
+          MATRIX-ID: ${{ matrix.id }}
