@@ -28,11 +28,25 @@ jobs:
             const data = yaml.load(fileContents);
             return JSON.stringify(data);
 
-      - name: Run Playbooks
+      - name: make values
+        id: set-matrix
         run: |
+          # sample
+          echo '["{\"name\": \"a\"}","{\"name\": \"b\"}"]' | jq -c
+
           result='${{ steps.read-playbooks.outputs.result }}'
-          for item in $(echo "$result" | jq -c '.[]'); do
-            echo $item
+          # initial var
+          list='['
+          # jsonの配列単位でイテレーション
+          for s in $($result|jq -r|jq .[]| jq -c|jq @json); do
+            # "", で囲って配列として連結
+            list=${list}"${s}",
           done
+          # 変数listの最後の文字','を']'に置換
+          list=$(echo $list | sed -e 's/\,$/\]/g')
+          # debug
+          echo $list
+          # set output
+          echo "value=${list}"
         env:
           result: ${{ steps.read-playbooks.outputs.result }}
