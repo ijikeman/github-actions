@@ -29,7 +29,7 @@ jobs:
           script: |
             const fs = require('fs');
             const yaml = require('js-yaml');
-            const fileContents = fs.readFileSync(${{ env.setting_file }}, 'utf8');
+            const fileContents = fs.readFileSync('${{ env.setting_file }}', 'utf8');
             const data = yaml.load(fileContents);
             return JSON.stringify(data);
 
