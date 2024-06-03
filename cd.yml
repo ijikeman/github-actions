@@ -1,2 +1,6 @@
-ANSIBLE_PLAYBOOK: test.yml,playbook1.yml
-ANSIBLE_INVENTORY: production
+-
+  PLAYBOOK: test.yml
+  INVENTORY: production
+-
+  PLAYBOOK: playbook1.yml
+  INVENTORY: development

@@ -1,12 +1,33 @@
----
-  name: Main Action
-  on:
-    workflow_call:
-  
-  jobs:
-    ansible-lint-customver_job:
-      uses: ./.github/workflows/a.yml
-  
-    ansible-job:
-      uses: ./.github/workflows/b.yml
-      needs: ansible-lint-customver_job
+name: Run Playbooks
+
+on: [push]
+
+jobs:
+  run-playbooks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Read playbooks.yml
+        id: read-playbooks
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const fs = require('fs');
+            const yaml = require('js-yaml');
+            const fileContents = fs.readFileSync('cd.yml', 'utf8');
+            const data = yaml.load(fileContents);
+            return data;
+
+      - name: Run Playbooks
+        run: |
+          for item in $(echo "${{ steps.read-playbooks.outputs.result }}" | jq -c '.[]'); do
+            PLAYBOOK=$(echo $item | jq -r '.PLAYBOOK')
+            INVENTORY=$(echo $item | jq -r '.INVENTORY')
+            echo "Running playbook: $PLAYBOOK with inventory: $INVENTORY"
+            # ここにAnsibleコマンドを追加
+            # ansible-playbook -i $INVENTORY $PLAYBOOK
+          done
+        env:
+          result: ${{ steps.read-playbooks.outputs.result }}
