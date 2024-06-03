@@ -1,6 +1,7 @@
 name: Run Playbooks
 
-on: workflow_call
+on:
+  workflow_call:
 
 env:
   setting_file: 'playbooks.yml'
@@ -18,14 +19,14 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@main
         with:
-          node-version: '14'
+          node-version: '16'
 
       - name: Install js-yaml
         run: npm install js-yaml
 
       - name: Read setting file
         id: read-setting
-        uses: actions/github-script@v4
+        uses: actions/github-script@main
         with:
           script: |
             const fs = require('fs');
