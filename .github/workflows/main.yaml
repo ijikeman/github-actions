@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       something: ${{ steps.set-matrix.outputs.value }}
+      something: ${{ steps.set-matrix.outputs.ready }}
     steps:
       - uses: actions/checkout@v4
       - name: make values
