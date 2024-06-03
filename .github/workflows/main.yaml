@@ -37,13 +37,14 @@ jobs:
   test:
     runs-on: ubuntu-latest
     needs: set-matrix
+    if: ${{ needs.set-matrix.outputs.something }} == '[]'
     steps:
       - name: 'debug'
         run: "echo  ${{ needs.set-matrix.outputs.something }}"
   example_matrix:
     runs-on: ubuntu-20.04
     needs: set-matrix
-    if: ${{ needs.set-matrix.outputs.something }} != '[]'
+    if: ${{ needs.set-matrix.outputs.something }} == '[]'
     strategy:
       matrix:
         id: ${{fromJson(needs.set-matrix.outputs.something)}}
