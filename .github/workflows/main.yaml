@@ -1,50 +1,53 @@
 name: Use reusable flow
 
-on:
-  workflow_call
-
-env:
-  ANSIBLE_VERSION: '2.10.7'
+on: push
 
 jobs:
-  set-matrix:
-    runs-on: ubuntu-latest
-    outputs:
-      something: ${{ steps.set-matrix.outputs.value }}
-    steps:
-      - uses: actions/checkout@v4
-      - name: make values
-        id: set-matrix
-        run: |
-          # sample
-          echo '["{\"name\": \"a\"}","{\"name\": \"b\"}"]' | jq -c
+  call_ansible:
+    uses: ./.github/workflows/test.yaml
 
-          # initial var
-          list='['
-          ready='false'
-          # jsonの配列単位でイテレーション
-          for s in $(jq .[] matrix.json| jq -c|jq @json); do
-            # "", で囲って配列として連結
-            list=${list}"${s}",
-            ready='true'
-          done
-          # 変数listの最後の文字','を']'に置換
-          list=$(echo $list | sed -e 's/\,$//g')
-          list=$list]
-          # debug
-          echo $list
-          # set output
-          echo "value=${list}" >> $GITHUB_OUTPUT
+# env:
+#   ANSIBLE_VERSION: '2.10.7'
 
-  example_matrix:
-    runs-on: ubuntu-20.04
-    needs: set-matrix
-    if: needs.set-matrix.outputs.something != '[]'
-    strategy:
-      matrix:
-        id: ${{fromJson(needs.set-matrix.outputs.something)}}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/matrix-test/
-        with:
-          MATRIX-ID: ${{ matrix.id }}
+# jobs:
+#   set-matrix:
+#     runs-on: ubuntu-latest
+#     outputs:
+#       something: ${{ steps.set-matrix.outputs.value }}
+#     steps:
+#       - uses: actions/checkout@v4
+#       - name: make values
+#         id: set-matrix
+#         run: |
+#           # sample
+#           echo '["{\"name\": \"a\"}","{\"name\": \"b\"}"]' | jq -c
+
+#           # initial var
+#           list='['
+#           ready='false'
+#           # jsonの配列単位でイテレーション
+#           for s in $(jq .[] matrix.json| jq -c|jq @json); do
+#             # "", で囲って配列として連結
+#             list=${list}"${s}",
+#             ready='true'
+#           done
+#           # 変数listの最後の文字','を']'に置換
+#           list=$(echo $list | sed -e 's/\,$//g')
+#           list=$list]
+#           # debug
+#           echo $list
+#           # set output
+#           echo "value=${list}" >> $GITHUB_OUTPUT
+
+#   example_matrix:
+#     runs-on: ubuntu-20.04
+#     needs: set-matrix
+#     if: needs.set-matrix.outputs.something != '[]'
+#     strategy:
+#       matrix:
+#         id: ${{fromJson(needs.set-matrix.outputs.something)}}
+#     steps:
+#       - uses: actions/checkout@v4
+#       - uses: ./.github/actions/matrix-test/
+#         with:
+#           MATRIX-ID: ${{ matrix.id }}

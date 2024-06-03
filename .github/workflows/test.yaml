@@ -1,42 +1,45 @@
 name: Run Playbooks
 
-on: [push]
+on: workflow_call
+
+env:
+  setting_file: 'playbooks.yml'
 
 jobs:
-  run-playbooks:
+  set-matrix:
     runs-on: ubuntu-latest
     outputs:
-      something: ${{ steps.set-matrix.outputs.value }}
+      something: ${{ steps.make-matrix.outputs.value }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@main
         with:
           node-version: '14'
 
       - name: Install js-yaml
         run: npm install js-yaml
 
-      - name: Read playbooks.yml
-        id: read-playbooks
+      - name: Read setting file
+        id: read-setting
         uses: actions/github-script@v4
         with:
           script: |
             const fs = require('fs');
             const yaml = require('js-yaml');
-            const fileContents = fs.readFileSync('playbooks.yml', 'utf8');
+            const fileContents = fs.readFileSync(${{ env.setting_file }}, 'utf8');
             const data = yaml.load(fileContents);
             return JSON.stringify(data);
 
       - name: make values
-        id: set-matrix
+        id: make-matrix
         run: |
           # sample
           echo '["{\"name\": \"a\"}","{\"name\": \"b\"}"]' | jq -c
 
-          result='${{ steps.read-playbooks.outputs.result }}'
+          result='${{ steps.read-setting.outputs.result }}'
           # initial var
           list='['
           # jsonの配列単位でイテレーション
@@ -53,16 +56,16 @@ jobs:
           echo "value=${list}"
           echo "value=${list}" >> $GITHUB_OUTPUT
         env:
-          result: ${{ steps.read-playbooks.outputs.result }}
+          result: ${{ steps.read-setting.outputs.result }}
           # set output
 
   example_matrix:
     runs-on: ubuntu-20.04
-    needs: run-playbooks
-    if: needs.run-playbooks.outputs.something != '[]'
+    needs: set-matrix
+    if: needs.set-matrix.outputs.something != '[]'
     strategy:
       matrix:
-        id: ${{fromJson(needs.run-playbooks.outputs.something)}}
+        id: ${{fromJson(needs.set-matrix.outputs.something)}}
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/matrix-test/
