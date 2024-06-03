@@ -65,7 +65,7 @@ jobs:
       - name: Generate workflow config
         id: generate-config
         run: |
-          echo "max-parallel: ${{ env.MAX_PARALLEL }}" >> $GITHUB_OUTPUT
+          echo "max-parallel=${{ env.MAX_PARALLEL }}" >> $GITHUB_OUTPUT
 
   example_matrix:
     runs-on: ubuntu-20.04
