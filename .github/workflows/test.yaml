@@ -24,13 +24,14 @@ jobs:
           script: |
             const fs = require('fs');
             const yaml = require('js-yaml');
-            const fileContents = fs.readFileSync('cd.yml', 'utf8');
+            const fileContents = fs.readFileSync('playbooks.yml', 'utf8');
             const data = yaml.load(fileContents);
-            return data;
+            return JSON.stringify(data);
 
       - name: Run Playbooks
         run: |
-          for item in $(echo "${{ steps.read-playbooks.outputs.result }}" | jq -c '.[]'); do
+          result='${{ steps.read-playbooks.outputs.result }}'
+          for item in $(echo "$result" | jq -c '.[]'); do
             PLAYBOOK=$(echo $item | jq -r '.PLAYBOOK')
             INVENTORY=$(echo $item | jq -r '.INVENTORY')
             echo "Running playbook: $PLAYBOOK with inventory: $INVENTORY"
