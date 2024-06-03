@@ -26,17 +26,15 @@ jobs:
             const yaml = require('js-yaml');
             const fileContents = fs.readFileSync('playbooks.yml', 'utf8');
             const data = yaml.load(fileContents);
-            return JSON.stringify(data);
+            return { result: JSON.stringify(data) }
 
       - name: Run Playbooks
         run: |
-          result='${{ steps.read-playbooks.outputs.result }}'
-          for item in $(echo "$result" | jq -c '.[]'); do
+          echo '${{ steps.read-playbooks.outputs.result }}' > result.json
+          for item in $(cat result.json | jq -c '.[]'); do
             PLAYBOOK=$(echo $item | jq -r '.PLAYBOOK')
             INVENTORY=$(echo $item | jq -r '.INVENTORY')
             echo "Running playbook: $PLAYBOOK with inventory: $INVENTORY"
             # ここにAnsibleコマンドを追加
             # ansible-playbook -i $INVENTORY $PLAYBOOK
           done
-        env:
-          result: ${{ steps.read-playbooks.outputs.result }}
