@@ -5,7 +5,7 @@ on:
 
 env:
   setting_file: 'playbooks.yml'
-  MAX_MATRIX: 1
+  MAX_MATRIX: '1'
 
 jobs:
   set-matrix:
@@ -68,7 +68,7 @@ jobs:
     strategy:
       matrix:
         id: ${{fromJson(needs.set-matrix.outputs.something)}}
-      max-parallel: ${{ env.MAX_MATRIX }}  # 並列実行数を2に制限
+      max-parallel: ${{ github.env.MAX_MATRIX }} # 並列実行数を2に制限
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/matrix-test/
