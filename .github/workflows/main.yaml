@@ -40,14 +40,14 @@ jobs:
   test:
     runs-on: ubuntu-latest
     needs: set-matrix
-    if: fromJSON(${{ needs.set-matrix.outputs.ready }})
+    if: !fromJSON(${{ needs.set-matrix.outputs.ready }})
     steps:
       - name: 'debug'
         run: "echo  ${{ needs.set-matrix.outputs.something }}"
   example_matrix:
     runs-on: ubuntu-20.04
     needs: set-matrix
-    if: fromJSON(${{ needs.set-matrix.outputs.ready }})
+    if: !fromJSON(${{ needs.set-matrix.outputs.ready }})
     strategy:
       matrix:
         id: ${{fromJson(needs.set-matrix.outputs.something)}}
