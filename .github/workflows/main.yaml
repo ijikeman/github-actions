@@ -35,7 +35,7 @@ jobs:
           echo $list
           # set output
           echo "value=${list}" >> $GITHUB_OUTPUT
-          echo "ready=${ready}" >> $GITHUB_OUTPUT
+          echo "::set-output name=ready::${ready}"
 
   test:
     runs-on: ubuntu-latest
@@ -44,6 +44,8 @@ jobs:
     steps:
       - name: 'debug'
         run: "echo  ${{ needs.set-matrix.outputs.something }}"
+      - name: 'debug2'
+        run: "echo  ${{ needs.set-matrix.outputs.ready }}"
   example_matrix:
     runs-on: ubuntu-20.04
     needs: set-matrix
