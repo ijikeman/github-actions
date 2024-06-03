@@ -41,7 +41,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     needs: set-matrix
-    if: fromJSON(${{ needs.set-matrix.outputs.ready }}) == 'true'
+    if: needs.set-matrix.outputs.ready == 'true'
     steps:
       - name: 'debug'
         run: "echo  ${{ needs.set-matrix.outputs.something }}"
@@ -50,7 +50,7 @@ jobs:
   example_matrix:
     runs-on: ubuntu-20.04
     needs: set-matrix
-    if: fromJSON(${{ needs.set-matrix.outputs.ready }}) == 'true'
+    if: needs.set-matrix.outputs.ready == 'true'
     strategy:
       matrix:
         id: ${{fromJson(needs.set-matrix.outputs.something)}}
