@@ -1,7 +1,7 @@
 ---
   name: Main Action
   on:
-    push:
+    workflow_call:
   
   jobs:
     ansible-lint-customver_job:
