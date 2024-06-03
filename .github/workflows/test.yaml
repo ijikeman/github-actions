@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       something: ${{ steps.make-matrix.outputs.value }}
+      max-parallel: ${{ steps.generate-config.outputs.value }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -61,13 +62,18 @@ jobs:
           result: ${{ steps.read-setting.outputs.result }}
           # set output
 
+      - name: Generate workflow config
+        id: generate-config
+        run: |
+          echo "max-parallel: ${{ env.MAX_PARALLEL }}" > config.yaml
+
   example_matrix:
     runs-on: ubuntu-20.04
     needs: set-matrix
     strategy:
       matrix:
         id: ${{fromJson(needs.set-matrix.outputs.something)}}
-      max-parallel: ${{ env.MAX_PARALLEL }} # 並列実行数を2に制限
+      max-parallel: ${{ needs.set-matrix.outputs.max-parallel }} # 並列実行数を制限
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/matrix-test/
