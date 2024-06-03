@@ -21,10 +21,12 @@ jobs:
 
           # initial var
           list='['
+          ready='false'
           # jsonの配列単位でイテレーション
           for s in $(jq .[] matrix.json| jq -c|jq @json); do
             # "", で囲って配列として連結
             list=${list}"${s}",
+            ready='true'
           done
           # 変数listの最後の文字','を']'に置換
           list=$(echo $list | sed -e 's/\,$//g')
@@ -33,18 +35,19 @@ jobs:
           echo $list
           # set output
           echo "value=${list}" >> $GITHUB_OUTPUT
+          echo "ready=${$ready}" >> $GITHUB_OUTPUT
 
   test:
     runs-on: ubuntu-latest
     needs: set-matrix
-    if: ${{ needs.set-matrix.outputs.something }} != '[]'
+    if: fromJSON(${{ needs.set-matrix.outputs.ready }})
     steps:
       - name: 'debug'
         run: "echo  ${{ needs.set-matrix.outputs.something }}"
   example_matrix:
     runs-on: ubuntu-20.04
     needs: set-matrix
-    if: ${{ needs.set-matrix.outputs.something }} == '[]'
+    if: fromJSON(${{ needs.set-matrix.outputs.ready }})
     strategy:
       matrix:
         id: ${{fromJson(needs.set-matrix.outputs.something)}}
