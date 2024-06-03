@@ -27,7 +27,8 @@ jobs:
             list=${list}"${s}",
           done
           # 変数listの最後の文字','を']'に置換
-          list=$(echo $list | sed -e 's/\,$/\]/g')
+          list=$(echo $list | sed -e 's/\,$//g')
+          list=$list]
           # debug
           echo $list
           # set output
@@ -39,6 +40,7 @@ jobs:
   example_matrix:
     runs-on: ubuntu-20.04
     needs: set-matrix
+    if: ${{ needs.set-matrix.outputs.something }} != '[]'
     strategy:
       matrix:
         id: ${{fromJson(needs.set-matrix.outputs.something)}}
