@@ -73,7 +73,7 @@ jobs:
     strategy:
       matrix:
         id: ${{fromJson(needs.set-matrix.outputs.something)}}
-      max-parallel: ${{ needs.set-matrix.outputs.max-parallel }} # 並列実行数を制限
+      max-parallel: ${{ fromJson(needs.set-matrix.outputs.max-parallel) }} # 並列実行数を制限
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/matrix-test/
